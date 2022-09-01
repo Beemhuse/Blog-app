@@ -28,8 +28,7 @@ export default function CreatePost() {
 
   }
   const handleImageUpload = async () => {
-// if (file == null) return;
-   const imageRef = ref(storage, `images/${file.name}`);
+   const imageRef = ref(storage, `posts/${file.name}`);
     const metadata = {
      contentType: 'image/jpeg',
     };

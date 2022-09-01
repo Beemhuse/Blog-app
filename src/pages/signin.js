@@ -34,7 +34,6 @@ const navigate=  useNavigate()
     e.preventDefault()
 setError("")
 if (data.email && data.password){
-
 await login(data.email, data.password)
 .then(()=>{
 navigate('/user/post')
@@ -49,7 +48,7 @@ navigate('/user/post')
 }
   return (
    <>
-   <Grid item md={12}>
+   <Grid item md={12} mt={5}>
     <form onSubmit={handleSubmit}>
 
    
