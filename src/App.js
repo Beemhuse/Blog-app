@@ -10,7 +10,8 @@ import { AuthProvider } from "./context/auth";
 const theme = {
   palette: {
     primary: {
-      main: "#ff5c00",
+      main: "#3849aa",
+      text: "#ffffff",
     },
     secondary: {
       main: "#7ce761",
@@ -35,10 +36,9 @@ function App() {
 
   return (
     <ThemeProvider theme = {createTheme(theme)}>
-
     <AuthProvider>
       {routes}
-</AuthProvider>
+    </AuthProvider>
     </ThemeProvider>
 
   )

@@ -57,14 +57,7 @@ function DrawerAppBar(props) {
           </Link>
         </List>
 
-        {
-          currentUser
-            ? <Box>
-              <Link to="/" >
-                <Button disableElevation sx={{ borderRadius: "20px", fontSize: '14px', ":hover": { backgroundColor: theme.palette.primary.main }, textTransform: 'none' }} variant="contained">Go to Editor</Button>
-              </Link>
-            </Box>
-            : <Stack spacing={2} alignItems='left'>
+            <Stack spacing={2} alignItems='left'>
 
               <Link to="/signup" >
               <Button disableElevation sx={{ borderRadius: "20px", fontSize: '14px', ":hover": { backgroundColor: theme.palette.primary.main }, textTransform: 'none', }} variant="contained">Register</Button>
@@ -73,7 +66,6 @@ function DrawerAppBar(props) {
               <Button disableElevation sx={{ borderRadius: "20px", fontSize: '12px', backgroundColor: 'none', border: '1px solid black', ":hover": { backgroundColor: 'none' }, textTransform: 'none', width: '80px', color: 'black' }}  >Log in</Button>
                 </Link>
             </Stack>
-        }
 
       </Stack>
 
