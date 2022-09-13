@@ -1,10 +1,10 @@
 import {ThemeProvider, createTheme,} from "@mui/material"
 import "./App.css";
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { useRoutes } from "react-router-dom";
 // import HomeRoutes from "./router/home";
 import DefaultRoutes from "./router/index";
-
+import { onAuthStateChanged } from "firebase/auth";
 import { AuthProvider } from "./context/auth";
 
 const theme = {
@@ -33,10 +33,16 @@ const theme = {
 
 function App() {
   const routes = useRoutes(DefaultRoutes);
+  // const [currentUser, setCurrentUser] = useState(null)
 
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, (user) => {
+  //     setCurrentUser(user);
+  //   });
+  // }, []);
   return (
     <ThemeProvider theme = {createTheme(theme)}>
-    <AuthProvider>
+    <AuthProvider  >
       {routes}
     </AuthProvider>
     </ThemeProvider>

@@ -1,17 +1,13 @@
 import React, {useState} from 'react'
 import {Grid,Card, CardHeader, CardContent, Alert, TextField, Button, Stack, Typography} from "@mui/material"
-import {auth, provider} from "../config/firebase-config"
+import {auth, provider, db} from "../config/firebase-config"
 import {signInWithPopup} from "firebase/auth"
 import {useAuth} from "../context/auth"
-
+import {useNavigate} from "react-router-dom"
+import { addDoc, collection } from "firebase/firestore";
 
 export default function Signup() {
     const { register } = useAuth()
-    // const [data, setState] = useState({
-    //     email: "",
-    //     password: "",
-    //     passwordConfirm: ""
-    //   })
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirm, setPasswordConfirm] = useState('')
@@ -23,6 +19,8 @@ export default function Signup() {
         localStorage.setItem("isAuth", true)
     })
 }
+
+const navigate = useNavigate()
 //   console.log(data)
 
 //   function handleForm(e) {
@@ -30,31 +28,56 @@ export default function Signup() {
 //     setState({...data,[name]: value})
 //   }
 
-  const handleSubmit = async (e)=> {
-    e.preventDefault()
-setError("")
+//   const handleSubmit = async (e)=> {
+//     e.preventDefault()
+// setError("")
+//     if(password === passwordConfirm){
+
+//         await register(email, password)
+            
+
+//           .then(() => {
+//             navigate("/user/dashboard/post");
+//           })
+//           .catch((error) => {
+//             setError(error.message);
+//           })
+//           .finally(() => {});
+//     } else{
+//         setError('input all Fields')
+//         console.log(error)
+//     }
+
+// }
+
+  const handleSubmit = async () => {
     try {
-await register(email, password)
+      const res = await register(email, password);
+      const user = res.user;
+      await addDoc(collection(db, "users"), {
+        uid: user.uid,
+        email: user.email,
+      });
+      sessionStorage.setItem('Auth Token', res._tokenResponse.refreshToken)
+      return true;
+    } catch (error) {
+      setError (error.message)
     }
-    catch (err){
-        setError(err.message);
-    }
-}
+  };
+
   return (
    <>
-   <Grid item md={12}>
-    <form onSubmit={handleSubmit}>
+   <Grid item md={12} mt={5}>
+    <form onSubmit={handleSubmit}>   
+    {error && <Alert severity="error" variant="filled" >{error}</Alert>}
 
-   
           <TextField label="email" name="email" variant="outlined" onChange={ (e) => setEmail (e.target.value)  } />
           <TextField label="password" name="password" type="password" variant="outlined" onChange={ (e) => setPassword (e.target.value) } />
           <TextField label="Password Confirmation" name="passwordConfirm" type="password" variant="outlined" onChange={ (e) => setPasswordConfirm (e.target.value) } />
           {error && <Alert severity="error" variant="filled" >{error}</Alert>}
           <Button onClick={handleSubmit}>Sign UP</Button>
-   
     </form>
 <Stack>
-
     <Typography>Sign In With Google</Typography>
     <Button onClick={signInWithGoogle}>Sign In With Google</Button>
 </Stack>

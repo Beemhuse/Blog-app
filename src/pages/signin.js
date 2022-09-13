@@ -1,20 +1,20 @@
 import React, {useState} from 'react'
-import {Grid,Card, CardHeader, CardContent, Alert, TextField, Button, Stack, Typography} from "@mui/material"
+import {Grid,Alert, TextField, Button, Stack, Typography} from "@mui/material"
 import {auth, provider} from "../config/firebase-config"
 import {signInWithPopup} from "firebase/auth"
-import {useAuth} from "../context/auth"
 import { useNavigate } from "react-router";
+import {useAuth} from "../context/auth"
+import { useDispatch, useSelector } from "react-redux";
+import { signin, selectUser } from "../redux/reducers/user";
+// import {useAuth} from "../context/auth"
+
 
 
 export default function Signin() {
+const dispatch = useDispatch();
 const navigate=  useNavigate()
-    const { login } = useAuth()
+    const { login, currentUser } = useAuth()
     const [data, setState] = useState('')
-
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    // const [passwordConfirm, setPasswordConfirm] = useState('')
-    //   const [isSubmit, setIsSubmit] = useState(false)
       const [error, setError] = useState("")
     
     const signInWithGoogle =()=>{
@@ -22,7 +22,6 @@ const navigate=  useNavigate()
         localStorage.setItem("isAuth", true)
     })
 }
-//   console.log(data)
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -31,12 +30,22 @@ const navigate=  useNavigate()
   }
 
   const handleSubmit = async (e)=> {
+    console.log(currentUser.displayName)
     e.preventDefault()
 setError("")
 if (data.email && data.password){
 await login(data.email, data.password)
 .then(()=>{
-navigate('/user/dashboard/post')
+dispatch(
+  signin({
+    email: currentUser.email,
+    uid: currentUser.uid,
+    displayName: currentUser.displayName,
+    photoUrl: currentUser.photoURL,
+  })
+);
+
+  navigate('/user/dashboard/post')
 })
 .catch(e =>{
     setError(e.message)

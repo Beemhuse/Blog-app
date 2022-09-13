@@ -4,6 +4,10 @@ import { addDoc, collection } from "firebase/firestore";
 import { db, auth } from "../config/firebase-config";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../config/firebase-config";
+import { useSelector, useDispatch } from "react-redux";
+import { addPost, deletePost, updatePost } from "../redux/reducers/index";
+
+
 // import {useNavigate} from "react-router-dom";
 // import {useAuth} from "../context/auth"
 
@@ -17,7 +21,7 @@ export default function CreatePost() {
   const [imageUrl, setImageUrl] = useState();
 
   const postCollectionRef = collection(db, "posts");
-
+const dispatch = useDispatch()
   // const {currentUser} = useAuth()
 
   const handleFile = (event) => {
@@ -54,58 +58,49 @@ export default function CreatePost() {
       postText,
       author: { name: auth.currentUser.displayName, id: auth.currentUser.uid },
       imageUrl: imageUrl,
-    });
+    })
+    .then(()=>{
+      dispatch(addPost({ id: auth.currentUser.uid, title, postText, author: auth.currentUser.displayName, imageUrl }));
 
-    // const storage = getStorage();
-    // const imagesRef = ref(storage, `images/${file.name}`)
-    // const metadata = {
-    //  contentType: 'image/jpeg',
-    // };
+    })     
   };
 
-  React.useEffect(() => {}, []);
+  // React.useEffect(() => {}, []);
+// const postList = useSelector((state) => state.posts.value)
+
 
   return (
-    <Grid
-      sx={{
-        // width: { md: `calc(100% - 150px)`, sm: "100%" },
-        // ml: { md: `${drawerWidth}px`, sm: "none" },
-        // border: "solid red",
-      }}
-      p={3}
-    >
-      
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          fullWidth
-          sx={{}}
-        >
-          <Typography variant="h5" sx={{ color: "black", fontWeight: "700" }}>
-            Make a new Post
-          </Typography>
-          <Avatar
-            sx={{
-              display: { md: "none", sm: "block" },
-              width: "100px",
-              height: "100px",
-            }}
-          />
-        </Stack>
-        <Divider
-          color="primary"
-          bgColor="primary"
-          sx={{ color: "", mt: "10px", border: '2px solid #3849aa' }}
+    <Grid p={3}>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+        fullWidth
+        sx={{}}
+      >
+        <Typography variant="h5" sx={{ color: "black", fontWeight: "700" }}>
+          Make a new Post
+        </Typography>
+        <Avatar
+          sx={{
+            display: { md: "none", sm: "block" },
+            width: "100px",
+            height: "100px",
+          }}
         />
-<Box mt={2}>
-<Typography>Title:</Typography>        
-          <TextField
-            name="title"
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-          />
+      </Stack>
+      <Divider
+        color="primary"
+        sx={{ color: "", mt: "10px", border: "2px solid #3849aa" }}
+      />
+      <Box mt={2}>
+        <Typography>Title:</Typography>
+        <TextField
+          name="title"
+          onChange={(e) => {
+            setTitle(e.target.value);
+          }}
+        />
         <Typography>Article</Typography>
         <TextField
           id="outlined-multiline-static"
@@ -122,9 +117,9 @@ export default function CreatePost() {
         <Button
           component="label"
           sx={{
-            background: "#E07014",
+            background: "#3849aa",
             color: "white",
-            "&:hover": { backgroundColor: "#E07014", color: "#white" },
+            "&:hover": { backgroundColor: "#3849aa", color: "white" },
           }}
         >
           Upload Image

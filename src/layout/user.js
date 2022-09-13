@@ -1,13 +1,14 @@
-import React from "react";
-// import {Container, } from "@mui/material";
+import React, {useEffect, useState} from "react";
 import UserDrawerAppBar from "../components/userNavbar";
 import {
-  Grid,
+  Grid,CircularProgress, Box, Typography
 } from "@mui/material/";
 import {Outlet} from "react-router-dom"
+import { useNavigate} from "react-router-dom"
 import PermanentDrawerLeft from './components/sidebar'
 import {useAuth} from "../context/auth"
-
+import { useDispatch, useSelector } from 'react-redux';
+import {signin, selectUser} from "../redux/reducers/user"
 const drawerWidth = 150
 const theme = {
   palette: {
@@ -31,19 +32,52 @@ const theme = {
     ].join(","),
   },
 };
+
+
 // const drawerWidth = 150;
 
 
-export default function UserLayout(props) {
-  const [open, setOpen] = React.useState(false);
-  // const handleOpen = () => setOpen(true);
-  // const handleClose = () => setOpen(false);
-
-  const [open2, setOpen2] = React.useState(false);
-  // const handleOpen2 = () => setOpen2(true);
-  // const handleClose2 = () => setOpen2(false);
-
+export default function UserLayout() {
+  // const [open, setOpen] = React.useState(false);
+  // const [loading, setLoading] = useState(false)
+ 
+  // const [user, setUser] = React.useState('');
+  const navigate = useNavigate()
   const {currentUser} = useAuth()
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+
+  useEffect(()=>{
+    let authToken = sessionStorage.getItem('Auth Token')
+    if(!authToken){
+      console.log('mounted', authToken, user)
+      navigate("/signin")
+    }
+  })
+
+//   useEffect(()=>{
+// setUser(currentUser.email)
+// console.log(user)
+//   }, [])
+
+
+useEffect(()=>{
+  if (currentUser){
+    dispatch(
+      signin({
+        email: currentUser.email,
+        uid: currentUser.uid,
+        displayName: currentUser.displayName,
+        photoUrl: currentUser.photoURL,
+      })
+    )
+  }
+  else{
+
+  }
+}, [])
+
+
   return (
     <>
     {
@@ -60,16 +94,18 @@ export default function UserLayout(props) {
           width: { md: `calc(100% - ${drawerWidth}px)`, sm: "100%" },
           minHeight: "100vh",
           ml: { md: `${drawerWidth}px`, sm: "none" },
-          // border:'solid black'
         }}
       >
+        <Typography>Welcome {currentUser.email}</Typography>
         <Outlet />
       </Grid>
         </>
 
       ):(
 <>
-
+<Box>
+        <CircularProgress variant="indeterminate" justifyContent='center' sx={{width:'fit-content', margin:'auto'}} />
+        </Box>
 </>
       )
     }

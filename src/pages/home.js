@@ -1,5 +1,5 @@
 import React from "react";
-import {Container, Grid, Avatar, Typography, Box, Stack } from "@mui/material";
+import { Grid, Avatar, Typography, Box, Stack } from "@mui/material";
 import image from "../images/Rectangle4.png";
 
 export default function Homepage() {
