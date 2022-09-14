@@ -1,6 +1,6 @@
 
 import CreatePost from "../pages/createPost"
-import Editprofile from "../pages/user/profile"
+import Editprofile from "../pages/user/index"
 
 const UserRoutes = [
   { path: 'profile', element: <Editprofile /> },  

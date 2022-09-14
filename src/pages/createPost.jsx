@@ -8,8 +8,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { addPost, deletePost, updatePost } from "../redux/reducers/index";
 
 
-// import {useNavigate} from "react-router-dom";
-// import {useAuth} from "../context/auth"
+import {useNavigate} from "react-router-dom";
+import {useAuth} from "../context/auth"
 
 // const drawerWidth = 150;
 export default function CreatePost() {
@@ -22,7 +22,7 @@ export default function CreatePost() {
 
   const postCollectionRef = collection(db, "posts");
 const dispatch = useDispatch()
-  // const {currentUser} = useAuth()
+  const {currentUser} = useAuth()
 
   const handleFile = (event) => {
     setFile(event.target.files[0]);

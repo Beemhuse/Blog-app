@@ -4,7 +4,7 @@ import {UsersData} from "../fakeData"
 
 export const postSlice = createSlice({
     name: "posts",
-    initialState:{value:UsersData},
+    initialState:{value: UsersData},
     reducers: {
         addPost: (state, action) =>{
             state.value.push(action.payload);

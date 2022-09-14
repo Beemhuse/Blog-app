@@ -47,13 +47,13 @@ export default function UserLayout() {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
+  let authToken = sessionStorage.getItem('Auth Token')
   useEffect(()=>{
-    let authToken = sessionStorage.getItem('Auth Token')
-    if(!authToken){
+    if(authToken ===null){
       console.log('mounted', authToken, user)
       navigate("/signin")
     }
-  })
+  }, [authToken])
 
 //   useEffect(()=>{
 // setUser(currentUser.email)

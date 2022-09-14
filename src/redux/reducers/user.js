@@ -17,12 +17,21 @@ const userSlice = createSlice({
     signin: (state, action) => {
       state.user = action.payload;
     },
+    update:(state, action) =>{
+ state.value.map((user) => {
+   if (user.id === action.payload.id) {
+     user.displayName = action.payload.displayName;
+     user.imageURL = action.payload.imageUrl;
+   }
+   return state;
+ });
+    }, 
     register: (state) => {
       state.user = null;
     },
   },
 });
-export const { signin, register } = userSlice.actions;
+export const { signin, register, update } = userSlice.actions;
 
 // selectors
 export const selectUser = (state) => state.user.user;

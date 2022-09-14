@@ -25,8 +25,8 @@ function handleChange2(e) {
   setUpdateData({ ...updateData, [name]: value });
   console.log(updateData.name);
 }
+const postList = useSelector((state) => state.posts)
 
-const postList = useSelector((state) => state.posts.value)
     return (
       <>
         <div className="addUsers">
@@ -48,7 +48,7 @@ const postList = useSelector((state) => state.posts.value)
           className="displayUsers"
           style={{ width: "fit-content", margin: "20px auto" }}
         >
-          {postList.map((user) => (
+          {postList?.map((user) => (
             <div
               key={user.id}
               style={{

@@ -12,33 +12,26 @@ Avatar,
 } from "@mui/material/";
 import { useNavigate } from "react-router-dom";
 import { getAuth, updateProfile } from "firebase/auth";
-import { collection } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../config/firebase-config";
-import { db, } from "../../config/firebase-config";
 import ImageAvatar from "../../layout/components/avatar";
 import { useAuth } from "../../context/auth"
+import { update, selectUser } from "../../redux/reducers/user";
+import { useDispatch, } from "react-redux";
 
-export default function UserProfile() {
+
+
+
+export default function EditProfile() {
   const [values, setValues] = React.useState({})
   const [file, setFile] = React.useState("")
-  // const [file1, setFile1] = React.useState("")
+  const [file1, setFile1] = React.useState("")
   const [loading, setLoading] = React.useState(false)
   const [imageUrl, setImageUrl] = useState();
-
+const dispatch =useDispatch()
   const navigate = useNavigate()
-  // const [value, setValue] = React.useState([]);
-//   const { currentUser } = useAuth();
 const auth = getAuth();
 const user = auth.currentUser;
-//   React.useEffect(() => {
-//     profileManager
-//       .getProfile(currentUser)
-//       .catch((e) => {
-//         // setValue({});
-//         console.log(e);
-//       });
-//   }, [currentUser]);
 
 
   const handleChange = (e) => {
@@ -48,7 +41,7 @@ const user = auth.currentUser;
   }
   const handleFile = (event) => {
     setFile(event.target.files[0])
-    // setFile1(URL.createObjectURL(event.target.files[0]))
+    setFile1(URL.createObjectURL(event.target.files[0]))
 
   }
 
@@ -58,11 +51,13 @@ const handleSubmit = async (e) => {
   e.preventDefault();
   handleImageUpload()
   await updateProfile(auth.currentUser, {
-    displayName: "testing",
+    displayName: values.username,
     photoURL: imageUrl,
   })
     .then(() => {
-setLoading(true)
+      dispatch(update({ displayName: values.username, imageUrl: imageUrl }));
+
+      setLoading(true)
    
     })
     .catch((error) => {
@@ -83,7 +78,6 @@ const handleImageUpload = async () => {
           .catch((error) => {
             console.log(error.message, "error getting the image url");
           })
-          // setImageUrl(null)
           .catch((error) => {
             console.log(error.message);
           });
@@ -129,8 +123,21 @@ const handleImageUpload = async () => {
           </Box>
           <Grid item md={12} mt={12}>
             <Grid container spacing={2} p={2} alignItems={"center"}>
-              <Grid item md={4} xs={12} sx={{ justifyContent:'center'}}>
-          <ImageAvatar width="200px" height='200px' imageUrl ={imageUrl}/>
+              <Grid item md={4} xs={12} sx={{ justifyContent: "center" }}>
+                {file1 ? (
+                  <ImageAvatar
+                    width="200px"
+                    height="200px"
+                    imageUrl={file1}
+                  />
+                ) : (
+                  <ImageAvatar
+                    width="200px"
+                    height="200px"
+                    imageUrl={imageUrl}
+                  />
+                )}
+                {/* <ImageAvatar width="200px" height="200px" imageUrl={imageUrl} /> */}
                 <Button
                   component="label"
                   // mt={5}
@@ -141,23 +148,18 @@ const handleImageUpload = async () => {
                       backgroundColor: "#3849aa",
                       color: "white",
                     },
-                    margin:'20px auto',
-                    width:'fit-content'
+                    margin: "20px auto",
+                    width: "fit-content",
                     // marginTop:'20px'
                   }}
                 >
                   Upload File
-                  <input
-                    type="file"
-                    onChange={handleFile}
-                    hidden
-                    required
-                  />
+                  <input type="file" onChange={handleFile} hidden required />
                 </Button>
               </Grid>
               <Grid item md={4} xs={12}>
-                  <form onSubmit={handleSubmit}>
-                <Stack spacing={2} >
+                <form onSubmit={handleSubmit}>
+                  <Stack spacing={2}>
                     <Typography>Username</Typography>
                     <TextField
                       name="username"
@@ -187,8 +189,8 @@ const handleImageUpload = async () => {
                         Update
                       </Button>
                     )}
-                </Stack>
-                  </form>
+                  </Stack>
+                </form>
               </Grid>
             </Grid>
           </Grid>
