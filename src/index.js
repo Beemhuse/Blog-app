@@ -6,7 +6,9 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux'
 // import App from "./redux/index"
 import store from './redux/store/index'
+import {fetchPosts} from "./redux/reducers/index";
 
+store.dispatch(fetchPosts)
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

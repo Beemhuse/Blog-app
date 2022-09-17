@@ -1,15 +1,20 @@
 import React from 'react';
 import {useSelector} from 'react-redux'
+import { useParams } from "react-router-dom"
+import {selectPostById} from '../redux/'
+export const SinglePostPage =() =>{
+const { postId } = useParams()
+console.log(postId)
 
-export const SinglePostPage =({match}) =>{
-const {postId} = match.params
+const post = useSelector((state) =>
+  state.posts
+);
+console.log(post)
 
-const post = useSelector(state => post.id === postId)
-
-if (!post){
+if (!post ){
     return (
         <section>
-            <h3>Post not found!</h3>
+            <h3 style={{color:'black'}}>Post not found!</h3>
         </section>
     )
 }
@@ -22,7 +27,16 @@ if (!post){
 
 return(
     <>
-    
+    <section>
+        <article style={{backgroundColor:'yellow'}}>
+            hfhsioaufhaoihfpaoih
+            <h2 style={{color: 'black'}}>{post.author}</h2>
+            <p>{post.postText}</p>
+        </article>
+    </section>
+
+
+
     </>
 )
 

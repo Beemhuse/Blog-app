@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { Grid, Box,Avatar, Stack,Divider, Button, TextField, Typography } from "@mui/material";
 import { addDoc, collection } from "firebase/firestore";
 import { db, auth } from "../config/firebase-config";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {  ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../config/firebase-config";
-import { useSelector, useDispatch } from "react-redux";
-import { addPost, deletePost, updatePost } from "../redux/reducers/index";
+// import {  useDispatch } from "react-redux";
+// import { viewPost,} from "../redux/reducers/index";
 
 
-import {useNavigate} from "react-router-dom";
-import {useAuth} from "../context/auth"
+// import {useNavigate} from "react-router-dom";
+// import {useAuth} from "../context/auth"
 
 // const drawerWidth = 150;
 export default function CreatePost() {
@@ -21,8 +21,8 @@ export default function CreatePost() {
   const [imageUrl, setImageUrl] = useState();
 
   const postCollectionRef = collection(db, "posts");
-const dispatch = useDispatch()
-  const {currentUser} = useAuth()
+// const dispatch = useDispatch()
+  // const {currentUser} = useAuth()
 
   const handleFile = (event) => {
     setFile(event.target.files[0]);
@@ -53,6 +53,16 @@ const dispatch = useDispatch()
 
   const createPost = async () => {
     handleImageUpload();
+    // dispatch(
+    //   addPost({
+    //     id: auth.currentUser.uid,
+    //     title,
+    //     postText,
+    //     author: auth.currentUser.displayName,
+    //     imageUrl,
+    //   })
+    // );
+
     await addDoc(postCollectionRef, {
       title,
       postText,
@@ -60,13 +70,9 @@ const dispatch = useDispatch()
       imageUrl: imageUrl,
     })
     .then(()=>{
-      dispatch(addPost({ id: auth.currentUser.uid, title, postText, author: auth.currentUser.displayName, imageUrl }));
-
+      
     })     
   };
-
-  // React.useEffect(() => {}, []);
-// const postList = useSelector((state) => state.posts.value)
 
 
   return (
@@ -91,7 +97,7 @@ const dispatch = useDispatch()
       </Stack>
       <Divider
         color="primary"
-        sx={{ color: "", mt: "10px", border: "2px solid #3849aa" }}
+        sx={{  mt: "10px", border: "2px solid #3849aa" }}
       />
       <Box mt={2}>
         <Typography>Title:</Typography>

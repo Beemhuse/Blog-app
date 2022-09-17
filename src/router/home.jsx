@@ -12,9 +12,6 @@ const HomeRoutes = [
   { path: '/posts/:postId', element: <SinglePostPage/>},
   { path: '/signup', element: <Signup /> },
   { path: '/signin', element: <Signin /> },
-  // { path: '/post', element: <CreatePost /> },
-  // { path: '/dashboard', element: <Dashboard /> },
-
   
 ]
 //   { path: '/owner/dashboard', element: <OwnerDashboard />, children: [...OwnerRoutes]  },
