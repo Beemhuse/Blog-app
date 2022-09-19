@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Grid,Card, CardHeader, CardContent, Alert, TextField, Button, Stack, Typography} from "@mui/material"
+import {Grid, Alert, TextField, Button, Stack, Typography} from "@mui/material"
 import {auth, provider, db} from "../config/firebase-config"
 import {signInWithPopup} from "firebase/auth"
 import {useAuth} from "../context/auth"
@@ -11,7 +11,7 @@ export default function Signup() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirm, setPasswordConfirm] = useState('')
-      const [isSubmit, setIsSubmit] = useState(false)
+      // const [isSubmit, setIsSubmit] = useState(false)
       const [error, setError] = useState("")
     
     const signInWithGoogle =()=>{
@@ -51,17 +51,25 @@ const navigate = useNavigate()
 // }
 
   const handleSubmit = async () => {
-    try {
-      const res = await register(email, password);
-      const user = res.user;
-      await addDoc(collection(db, "users"), {
-        uid: user.uid,
-        email: user.email,
-      });
-      sessionStorage.setItem('Auth Token', res._tokenResponse.refreshToken)
-      return true;
-    } catch (error) {
-      setError (error.message)
+    if (password === passwordConfirm){
+
+      try {
+        const res = await register(email, password);
+        const user = res.user;
+        await addDoc(collection(db, "users"), {
+          uid: user.uid,
+          email: user.email,
+        })
+        sessionStorage.setItem('Auth Token', res._tokenResponse.refreshToken)
+        
+        navigate('/signin')
+        return true;
+      } catch (error) {
+        setError (error.message)
+      }
+    }
+    else{
+      return false;
     }
   };
 
