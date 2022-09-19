@@ -5,22 +5,18 @@ import { db } from '../../config/firebase-config'
 
 const initialState = {
  posts: [],
- status: 'idle',
+ status: 'idle'|'pending' | "success" | "failed",
  error: null
 
 };
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
-  try{
       const postsCollectionRef = collection(db, "posts");
       const data = await getDocs(postsCollectionRef);
       let res = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-return res
-  }
-  catch (err){
-    return err.message
-  }
-
+      return res
+  
+  
 })
 
 export const postSlice = createSlice({
@@ -29,11 +25,17 @@ export const postSlice = createSlice({
     reducers: {
         viewPost: (state, action) =>{
             // state.push(action.payload);
-            state = [...action.payload]
+            state.posts = [...action.payload]
+            return state
+        },
+        addPost: (state, action) =>{
+            state.push(action.payload);
+            // state.posts = [...action.payload]
             return state
         },
         deletePost:(state, action) =>{
             state= state.filter((user) => user.id !== action.payload.id)
+            // return state
         },
         updatePost:(state, action) =>{
             state.map((user) => {
@@ -52,7 +54,9 @@ export const postSlice = createSlice({
           })
 
           .addCase(fetchPosts.fulfilled, (state, action) => {
-            state.status = "loading";
+            
+            state.status = "success"
+            return state.posts = [...action.payload]
           })
 
           .addCase(fetchPosts.rejected, (state, action) => {
@@ -62,14 +66,14 @@ export const postSlice = createSlice({
     }
 })
 
-export const {viewPost, deletePost, updatePost} = postSlice.actions
+export const {viewPost, deletePost, updatePost, addPost} = postSlice.actions
 export const selectAllPosts = (state) => state.posts.posts;
 export const getPostsStatus = (state) => state.posts.status;
 export const getPostsError = (state) => state.posts.posts;
 
 export const selectPostById = (state, postId) =>{
-  state.posts.find((post) => post.id === postId )
-return state
+  
+  
 }
 
 

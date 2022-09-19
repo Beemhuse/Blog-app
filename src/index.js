@@ -5,18 +5,22 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux'
 // import App from "./redux/index"
-import store from './redux/store/index'
+import {store, persistor} from './redux/store/index'
+import {PersistGate } from 'redux-persist/integration/react';
 import {fetchPosts} from "./redux/reducers/index";
 
-store.dispatch(fetchPosts)
+store.dispatch(fetchPosts())
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-<Provider store={store}>
 <BrowserRouter>
+<Provider store={store}>
+    <PersistGate  persistor={persistor}>
     <App />
-</BrowserRouter>
+
+    </PersistGate>
 </Provider>
+</BrowserRouter>
 );
 
 

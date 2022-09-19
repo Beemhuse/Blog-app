@@ -1,16 +1,18 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import {Box, Drawer,Typography,ListItemButton,List,Toolbar, Button,AppBar,  Stack } from '@mui/material';
-import { useAuth } from '../context/auth';
+// import { useAuth } from '../context/auth';
 import {Link} from "react-router-dom"
+import { AiOutlineMenu } from "react-icons/ai";
+
 // import useChangeRoute from '../hooks/useChangeRoute';
 
 const drawerWidth = 240;
-const navItems = ['Future Resume', 'Home', 'Resume Template', "Pricing"];
 const theme = {
   palette: {
     primary: {
-      main: "#ff5c00",
+      main: "#3849aa",
+      text: '#ffffff'
     },
     secondary: {
       main: "#7ce761",
@@ -24,17 +26,16 @@ const theme = {
       "sans-serif",
       "Arial",
       "Roboto",
-      'Poppins',
-
-    ].join(',')
-  }
-}
+      "Poppins",
+    ].join(","),
+  },
+};
 
 
 function DrawerAppBar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const { currentUser } = useAuth()
+  // const { currentUser } = useAuth()
 
   // const {loading} = useChangeRoute()
 
@@ -75,33 +76,67 @@ function DrawerAppBar(props) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: { md: 'flex', sm: 'block' } }}>
-      <AppBar elevation={0} sx={{ backgroundColor: 'black' }} component="nav" position='fixed'>
-        <Toolbar>
-        <Link to="/">
-          <Typography
-            variant="h5"
-            component="div"
-            sx={{ flexGrow: 1, color: theme.palette.primary.main, display: { sm: 'block', md: 'block' } }}
-          >
-            My Blog
-          </Typography>
+    <Box sx={{ display: { md: "flex", sm: "block" } }}>
+      <AppBar
+        elevation={0}
+        sx={{
+          backgroundColor: theme.palette.primary.main,
+          color: theme.palette.primary.text,
+        }}
+        component="nav"
+        position="fixed"
+      >
+        <Toolbar sx={{ justifyContent: "space-between", display: "flex" }}>
+          <Link to="/">
+            <Typography
+              variant="h5"
+              component="div"
+              sx={{
+                flexGrow: 1,
+                color: theme.palette.primary.text,
+
+                display: { sm: "block", md: "block" },
+              }}
+            >
+              My Blog
+            </Typography>
           </Link>
           <Button
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, marginLeft: 'auto', color: 'black', fontSize: '20px', display: { sm: 'none' } }}
+            sx={{
+              mr: 2,
+              marginLeft: "auto",
+              color: "black",
+              fontSize: "20px",
+              display: { sm: "none" },
+            }}
           >
-            {/* <AiOutlineMenu /> */}
+            <AiOutlineMenu />
           </Button>
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            <Stack  justifyContent="flex-end" alignItems='center' direction={"row"} sx={{border:'solid red', width:'100%'}}>
-              <List sx={{ display: 'flex', fontSize: '14px', fontFamily: 'Quicksand', color: '#1D1D1D', opacity: '0.7', ":hover": { opacity: '1' }, marginRight: '100px' }}>
-                <Link to="/" >
-                <ListItemButton>Home</ListItemButton>
+          <Box sx={{ display: { xs: "none", sm: "block" } }}>
+            <Stack
+              justifyContent="flex-end"
+              alignItems="center"
+              direction={"row"}
+              sx={{ width: "100%" }}
+            >
+              <List
+                sx={{
+                  display: "flex",
+                  fontSize: "14px",
+                  fontFamily: "Quicksand",
+                  color: theme.palette.primary.text,
+                  // opacity: "0.7",
+                  ":hover": { opacity: "1" },
+                  // marginRight: "100px",
+                }}
+              >
+                <Link to="/">
+                  <ListItemButton>Home</ListItemButton>
                 </Link>
-                <Link to="/resume" >
+                <Link to="/resume">
                   <ListItemButton>Template</ListItemButton>
                 </Link>
               </List>
@@ -126,19 +161,22 @@ function DrawerAppBar(props) {
           </Box>
         </Toolbar>
         <Box bgcolor={"red"} width="100%" zIndex="1000000000">
-        {/* {loading &&<LinearProgress  />} */}
-
+          {/* {loading &&<LinearProgress  />} */}
         </Box>
       </AppBar>
       <Box component="nav">
-      <Link to="/">
-        <Typography
-          variant="h5"
-          component="div"
-          sx={{ flexGrow: 1, color: theme.palette.primary.main, display: { xs: 'none', sm: 'block', md: 'block' } }}
-        >
-          My Blog
-        </Typography>
+        <Link to="/">
+          <Typography
+            variant="h5"
+            component="div"
+            sx={{
+              flexGrow: 1,
+              color: theme.palette.primary.main,
+              display: { xs: "none", sm: "block", md: "block" },
+            }}
+          >
+            My Blog
+          </Typography>
         </Link>
         <Drawer
           container={container}
@@ -150,11 +188,13 @@ function DrawerAppBar(props) {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            display: { xs: "block", sm: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+            },
           }}
         >
-
           {drawer}
         </Drawer>
       </Box>

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect,} from "react";
 import UserDrawerAppBar from "../components/userNavbar";
 import {
   Grid,CircularProgress, Box, Typography
@@ -48,12 +48,12 @@ export default function UserLayout() {
   const user = useSelector(selectUser);
 
   let authToken = sessionStorage.getItem('Auth Token')
-  // useEffect(()=>{
-  //   if(authToken ===null){
-  //     console.log('mounted', authToken, user)
-  //     navigate("/signin")
-  //   }
-  // }, [authToken])
+  useEffect(()=>{
+    if(authToken ===null){
+      console.log('mounted', authToken, user)
+      navigate("/signin")
+    }
+  }, [authToken, navigate, user])
 
 //   useEffect(()=>{
 // setUser(currentUser.email)
@@ -75,7 +75,7 @@ useEffect(()=>{
   else{
 
   }
-}, [])
+})
 
 
   return (
@@ -109,8 +109,6 @@ useEffect(()=>{
 </>
       )
     }
-      {/* <Container disableGutters> */}
-      {/* </Container> */}
     </>
   );
 }

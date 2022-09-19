@@ -1,5 +1,5 @@
 import React, { useEffect} from "react";
-import { Grid,Card, Avatar, Typography, Box, Stack } from "@mui/material";
+import { Grid,Card,Divider, Avatar, Typography, Box, Stack } from "@mui/material";
 import image from "../images/Rectangle4.png";
 // import { update, selectUser } from "../redux/reducers/user";
 import { useSelector, useDispatch } from "react-redux";
@@ -7,7 +7,7 @@ import { getDocs, collection } from 'firebase/firestore'
 import { db } from '../config/firebase-config'
 import { viewPost,  } from "../redux/reducers/index";
 import {Link} from "react-router-dom"
-import { fetchPosts, getPostsStatus, selectAllPosts, getPostsError } from "../redux/reducers/index";
+import { fetchPosts, getPostsStatus, selectAllPosts, } from "../redux/reducers/index";
 
 
 
@@ -17,10 +17,10 @@ export default function Homepage() {
   const postsCollectionRef = collection(db, "posts");
   const dispatch = useDispatch();
 const posts = useSelector(selectAllPosts)
-const error = useSelector(getPostsError)
+// const error = useSelector(getPostsError)
 const postsStatus = useSelector(getPostsStatus)
-// const postsList = useSelector((state) => state.posts);
-
+const postsList = useSelector((state) => state.posts);
+console.log(postsList)
 useEffect(()=>{
 if(postsStatus ==='idle'){
   dispatch(fetchPosts())
@@ -28,28 +28,27 @@ if(postsStatus ==='idle'){
 
 },[postsStatus, dispatch])
 
-// const orderedPosts = posts.map((post) => (
-//   <Grid key={post.id} md={4}>
-//     <Card sx={{ background: "transparent" }}>
-//       <Avatar variant="square" src={post.imageUrl} alt="" />
-//       <Typography sx={{ color: "white" }}>{post.id}</Typography>
-//       <Typography sx={{ color: "white" }}>{post.title}</Typography>
-//       <Typography sx={{ color: "white" }}>
-//         {post.postText.substring(0, 20)}
-//       </Typography>
-//       <Link to={`/posts/${post.id}`}>View Post</Link>
-//     </Card>
-//   </Grid>
-// ));
+const orderedPosts = posts?.map(post => (
+  <Grid key={post.id} md={4} sm={6} xs={12} sx={{border:'solid white'}}>
+    <Card sx={{ background: "transparent", width:'inherit' }}>
+      <Avatar variant="square" src={post.imageUrl} alt=""  sx={{width:'inherit', height:'200px'}}/>
+      <Typography variant='h4' sx={{ color: "white" }}>{post.title}</Typography>
+      <Typography sx={{ color: "white" }} paragraph>
+        {post.postText.substring(0, 20)}
+      </Typography>
+      <Link to={`/posts/${post.id}`}>View Post</Link>
+    </Card>
+  </Grid>
+));
 
 
-let content;
-if(postsStatus ==='loading'){
-  content =<p>"Loading..."</p>
-}
-else if(postsStatus ==='succeeded'){
-  // content = orderedPosts
-}
+// let content;
+// if(postsStatus ==='loading'){
+//   content =<p>"Loading..."</p>
+// }
+// else if(postsStatus ==='succeeded'){
+//   content = orderedPosts
+// }
 
 
   useEffect(() => {
@@ -70,15 +69,9 @@ else if(postsStatus ==='succeeded'){
 
 return (
   <>
-    <Grid
-      container
-      spacing={3}
-      p={3}
-      sx={{ minHeight: "100vh", backgroundColor: "black" }}
-    >
-      <Grid item md={12} px={2}>
+    <Grid container p={3} spacing={2} sx={{ minHeight: "100vh" }}>
+      <Grid item md={8} mt={3}>
         <Grid
-          mt={4}
           container
           spacing={2}
           sx={{
@@ -87,41 +80,184 @@ return (
             alignItems: "center",
           }}
         >
-          <Grid item md={5} sx={{ border: "solid blue" }}>
-            <Typography sx={{ color: "white" }}>Trending News</Typography>
+          <Grid item md={12} sx={{  }}>
+            <Typography sx={{}}>Trending News</Typography>
+            <Divider
+              color="primary"
+              sx={{ mt: "10px", border: "2px solid #3849aa" }}
+            />
+            <Grid container spacing={2} py={2}>
+              <Grid item md={6}>
+                <Box component="div" sx={{ width: "inherit" }}>
+                  <Avatar
+                    variant={"square"}
+                    src={image}
+                    alt=""
+                    sx={{ width: "inherit", height: "300px" }}
+                  />
+                  <Stack spacing={2}>
+                    <Typography variant="p" sx={{ opacity: "0.6" }}>
+                      UI Design
+                    </Typography>
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        opacity: "0.6",
+                        fontSize: "14px",
+                        fontWeight: "400",
+                      }}
+                    >
+                      Understanding color theory: the color wheel and finding
+                      complementary colors
+                    </Typography>
+                  </Stack>
+                </Box>
+              </Grid>
 
-            <Box component="div" sx={{ width: "inherit" }}>
-              <Avatar
-                variant={"square"}
-                src={image}
-                alt=""
-                sx={{ width: "inherit", height: "300px" }}
-              />
-              <Stack spacing={2}>
-                <Typography variant="p" sx={{ opacity: "0.6", color: "white" }}>
-                  UI Design
-                </Typography>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    opacity: "0.6",
-                    fontSize: "24px",
-                    fontWeight: "400",
-                    color: "#FFFFFF",
-                  }}
-                >
-                  Understanding color theory: the color wheel and finding
-                  complementary colors
-                </Typography>
-                {/* <Avatar sx={{ width: 60, height: 60 }} /> */}
-              </Stack>
-            </Box>
+              <Grid item md={6}>
+                <Grid container spacing={2}>
+                  <Grid
+                    item
+                    md={12}
+                    sx={{
+                      display: "flex",
+                      gap: "20px",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Box
+                      component="div"
+                      sx={{
+                        width: "inherit",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        gap: "10px",
+                      }}
+                    >
+                      <Avatar
+                        variant={"square"}
+                        src={image}
+                        alt=""
+                        sx={{ width: "100px", height: "100px" }}
+                      />
+                      <Stack spacing={1}>
+                        <Typography variant="p" sx={{ opacity: "0.6" }}>
+                          UI Design
+                        </Typography>
+                        <Typography
+                          variant="h4"
+                          sx={{
+                            opacity: "0.6",
+                            fontSize: "14px",
+                            fontWeight: "400",
+                            // color: "#FFFFFF",
+                          }}
+                        >
+                          Understanding color theory: the color wheel and
+                          finding complementary colors
+                        </Typography>
+                      </Stack>
+                    </Box>
+                    <Box
+                      component="div"
+                      sx={{
+                        width: "inherit",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        gap: "10px",
+                      }}
+                    >
+                      <Avatar
+                        variant={"square"}
+                        src={image}
+                        alt=""
+                        sx={{ width: "100px", height: "100px" }}
+                      />
+                      <Stack spacing={1}>
+                        <Typography variant="p" sx={{ opacity: "0.6" }}>
+                          UI Design
+                        </Typography>
+                        <Typography
+                          variant="h4"
+                          sx={{
+                            opacity: "0.6",
+                            fontSize: "14px",
+                            fontWeight: "400",
+                            // color: "#FFFFFF",
+                          }}
+                        >
+                          Understanding color theory: the color wheel and
+                          finding complementary colors
+                        </Typography>
+                      </Stack>
+                    </Box>
+
+                    <Box
+                      component="div"
+                      sx={{
+                        width: "inherit",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        gap: "10px",
+                      }}
+                    >
+                      <Avatar
+                        variant={"square"}
+                        src={image}
+                        alt=""
+                        sx={{ width: "100px", height: "100px" }}
+                      />
+                      <Stack spacing={1}>
+                        <Typography variant="p" sx={{ opacity: "0.6" }}>
+                          UI Design
+                        </Typography>
+                        <Typography
+                          variant="h4"
+                          sx={{
+                            opacity: "0.6",
+                            fontSize: "14px",
+                            fontWeight: "400",
+                            // color: "#FFFFFF",
+                          }}
+                        >
+                          Understanding color theory: the color wheel and
+                          finding complementary colors
+                        </Typography>
+                      </Stack>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
           </Grid>
-          <Grid item md={6} sx={{ border: "solid red" }}>
-            <Typography sx={{ color: "white", textAlign: "right" }}>
+        </Grid>
+        <Grid item md={12} mt={4}>
+          <Typography sx={{}}>Latest News</Typography>
+          <Divider
+            color="primary"
+            sx={{ mt: "10px", border: "2px solid #3849aa" }}
+          />
+
+          <Grid container justifyContent="space-between">
+            {orderedPosts}
+          </Grid>
+        </Grid>
+      </Grid>
+
+      <Grid item md={4} mt={3}>
+        <Grid container>
+          <Grid item md={12} sx={{  }}>
+            <Typography sx={{ textAlign: "right" }}>
               Latest Technologies
             </Typography>
-            <Box component="div" sx={{ width: "200px" }}>
+            <Divider
+              color="primary"
+              sx={{ mt: "10px", border: "2px solid #3849aa" }}
+            />
+
+            <Box component="div" mt={2} sx={{ width: "200px" }}>
               <Avatar
                 variant={"square"}
                 src={image}
@@ -129,7 +265,7 @@ return (
                 sx={{ width: "inherit", height: "300px" }}
               />
               <Stack spacing={2}>
-                <Typography variant="p" sx={{ opacity: "0.6", color: "white" }}>
+                <Typography variant="p" sx={{ opacity: "0.6" }}>
                   UI Design
                 </Typography>
                 <Typography
@@ -138,99 +274,14 @@ return (
                     opacity: "0.6",
                     fontSize: "14px",
                     fontWeight: "400",
-                    color: "#FFFFFF",
+                    // color: "#FFFFFF",
                   }}
                 >
                   Understanding color theory: the color wheel and finding
                   complementary colors
                 </Typography>
-                {/* <Avatar sx={{ width: 60, height: 60 }} /> */}
               </Stack>
             </Box>
-          </Grid>
-        </Grid>
-        <Grid item md={12} mt={4}>
-          <Typography sx={{ color: "white" }}>Latest News</Typography>
-          <Grid container justifyContent="space-between">
-            {/* {orderedPosts} */}
-            {/* <Grid item md={4}>
-                <img src={image} alt="hhd" width={200} />
-                <Box component="div" sx={{}}>
-                  <Stack spacing={2}>
-                    <Typography
-                      variant="p"
-                      sx={{ opacity: "0.6", color: "white" }}
-                    >
-                      UI Design
-                    </Typography>
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        opacity: "0.6",
-                        fontSize: "24px",
-                        fontWeight: "400",
-                        color: "#FFFFFF",
-                      }}
-                    >
-                      Understanding color theory: the color wheel and finding
-                      complementary colors
-                    </Typography>
-                    <Avatar sx={{ width: 60, height: 60 }} />
-                  </Stack>
-                </Box>
-              </Grid>
-              <Grid item md={4}>
-                <img src={image} alt="hhd" width={200} />
-                <Box component="div" sx={{}}>
-                  <Stack spacing={2}>
-                    <Typography
-                      variant="p"
-                      sx={{ opacity: "0.6", color: "white" }}
-                    >
-                      UI Design
-                    </Typography>
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        opacity: "0.6",
-                        fontSize: "24px",
-                        fontWeight: "400",
-                        color: "#FFFFFF",
-                      }}
-                    >
-                      Understanding color theory: the color wheel and finding
-                      complementary colors
-                    </Typography>
-                    <Avatar sx={{ width: 60, height: 60 }} />
-                  </Stack>
-                </Box>
-              </Grid>
-              <Grid item md={4}>
-                <img src={image} alt="hhd" width={200} />
-                <Box component="div" sx={{}}>
-                  <Stack spacing={2}>
-                    <Typography
-                      variant="p"
-                      sx={{ opacity: "0.6", color: "white" }}
-                    >
-                      UI Design
-                    </Typography>
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        opacity: "0.6",
-                        fontSize: "24px",
-                        fontWeight: "400",
-                        color: "#FFFFFF",
-                      }}
-                    >
-                      Understanding color theory: the color wheel and finding
-                      complementary colors
-                    </Typography>
-                    <Avatar sx={{ width: 60, height: 60 }} />
-                  </Stack>
-                </Box>
-              </Grid> */}
           </Grid>
         </Grid>
       </Grid>

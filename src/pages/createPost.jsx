@@ -4,8 +4,8 @@ import { addDoc, collection } from "firebase/firestore";
 import { db, auth } from "../config/firebase-config";
 import {  ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../config/firebase-config";
-// import {  useDispatch } from "react-redux";
-// import { viewPost,} from "../redux/reducers/index";
+import {  useDispatch } from "react-redux";
+import { addPost} from "../redux/reducers/index";
 
 
 // import {useNavigate} from "react-router-dom";
@@ -21,7 +21,7 @@ export default function CreatePost() {
   const [imageUrl, setImageUrl] = useState();
 
   const postCollectionRef = collection(db, "posts");
-// const dispatch = useDispatch()
+const dispatch = useDispatch()
   // const {currentUser} = useAuth()
 
   const handleFile = (event) => {
@@ -53,15 +53,15 @@ export default function CreatePost() {
 
   const createPost = async () => {
     handleImageUpload();
-    // dispatch(
-    //   addPost({
-    //     id: auth.currentUser.uid,
-    //     title,
-    //     postText,
-    //     author: auth.currentUser.displayName,
-    //     imageUrl,
-    //   })
-    // );
+    dispatch(
+      addPost({
+        id: auth.currentUser.uid,
+        title,
+        postText,
+        author: auth.currentUser.displayName,
+        imageUrl,
+      })
+    );
 
     await addDoc(postCollectionRef, {
       title,

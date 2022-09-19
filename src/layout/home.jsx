@@ -8,7 +8,7 @@ export default function HomeLayout() {
   return (
     <>
         <DrawerAppBar />
-    <Container disableGutters maxWidth={false} sx={{border:'solid red',}}>
+    <Container disableGutters maxWidth={false} >
 <Outlet />
          </Container>
 
