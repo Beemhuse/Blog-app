@@ -1,22 +1,21 @@
-import * as React from 'react';
+import  React  from 'react';
+
 import PropTypes from 'prop-types';
 import {Box, Drawer,Typography,ListItemButton,List,Toolbar, Button,AppBar,  Stack } from '@mui/material';
 import { useAuth } from '../context/auth';
 import {Link} from "react-router-dom"
 import {AiOutlineMenu} from 'react-icons/ai'
-import {useNavigate} from "react-router-dom"
+// import {useNavigate} from "react-router-dom"
 // import useChangeRoute from '../hooks/useChangeRoute';
 
 
 function UserDrawerAppBar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const { user, logout } = useAuth()
-  const [error, setError] = React.useState()
+  const {  logout } = useAuth()
     const drawerWidth = props.drawerWidth;
     const theme = props.theme;
-const navigate = useNavigate();
-  // const {loading} = useChangeRoute()
+// const navigate = useNavigate();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);

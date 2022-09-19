@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
-import {Grid,Alert, TextField, Button, Stack, Typography} from "@mui/material"
+import {Grid,Alert, TextField, Button, Stack, } from "@mui/material"
 import {auth, provider} from "../config/firebase-config"
 import {signInWithPopup} from "firebase/auth"
 import { useNavigate } from "react-router";
 import {useAuth} from "../context/auth"
-import { useDispatch, useSelector } from "react-redux";
-import { signin, selectUser } from "../redux/reducers/user";
+import { useDispatch, } from "react-redux";
+import { signin,} from "../redux/reducers/user";
 // import {useAuth} from "../context/auth"
 
 
@@ -45,7 +45,7 @@ dispatch(
   })
 );
 
-  navigate('/user/dashboard/post')
+  navigate('/user/dashboard')
 })
 .catch(e =>{
     setError(e.message)
