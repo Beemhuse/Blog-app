@@ -7,7 +7,7 @@ import { getDocs, collection } from 'firebase/firestore'
 import { db } from '../config/firebase-config'
 import { viewPost,  } from "../redux/reducers/index";
 import {Link} from "react-router-dom"
-import { fetchPosts, getPostsStatus, selectAllPosts, } from "../redux/reducers/index";
+import { fetchPosts, getPostsStatus, selectAllPosts } from "../redux/reducers/index";
 
 
 
@@ -29,16 +29,16 @@ if(postsStatus ==='idle'){
 },[postsStatus, dispatch])
 
 const orderedPosts = posts?.map(post => (
-  <Grid key={post.id} md={4} sm={6} xs={12} sx={{border:'solid white'}}>
-    <Card sx={{ background: "transparent", width:'inherit' }}>
+  <Box variant='article' key={post.id}  >
+    <Card sx={{ background: "transparent",boxShadow:'none', width:'inherit', border:'none', padding:'10px' }} >
       <Avatar variant="square" src={post.imageUrl} alt=""  sx={{width:'inherit', height:'200px'}}/>
-      <Typography variant='h4' sx={{ color: "white" }}>{post.title}</Typography>
-      <Typography sx={{ color: "white" }} paragraph>
+      <Typography variant='h4' sx={{  }}>{post.title}</Typography>
+      <Typography sx={{  }} paragraph>
         {post.postText.substring(0, 20)}
       </Typography>
-      <Link to={`/posts/${post.id}`}>View Post</Link>
+      <Link to={`/posts/${post.id}`} style={{textDecoration:'none'}}>View Post</Link>
     </Card>
-  </Grid>
+  </Box>
 ));
 
 
@@ -240,7 +240,8 @@ return (
             sx={{ mt: "10px", border: "2px solid #3849aa" }}
           />
 
-          <Grid container justifyContent="space-between">
+          <Grid container  sx={{gap:'10px', display:'flex'}} >
+
             {orderedPosts}
           </Grid>
         </Grid>
