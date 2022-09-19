@@ -1,4 +1,4 @@
-import  React, {useEffect, useState} from "react";
+import  React, {useState} from "react";
 import Box from "@mui/material/Box";
 import {
 Avatar,
@@ -10,13 +10,13 @@ Avatar,
   Grid,
   CircularProgress,
 } from "@mui/material/";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { getAuth, updateProfile } from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../config/firebase-config";
 import ImageAvatar from "../../layout/components/avatar";
-import { useAuth } from "../../context/auth"
-import { update, selectUser } from "../../redux/reducers/user";
+// import { useAuth } from "../../context/auth"
+import { update } from "../../redux/reducers/user";
 import { useDispatch, } from "react-redux";
 
 
@@ -29,7 +29,7 @@ export default function EditProfile() {
   const [loading, setLoading] = React.useState(false)
   const [imageUrl, setImageUrl] = useState();
 const dispatch =useDispatch()
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 const auth = getAuth();
 const user = auth.currentUser;
 
