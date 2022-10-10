@@ -75,20 +75,25 @@ const navigate = useNavigate()
 
   return (
    <>
-   <Grid item md={12} mt={5}>
+   <Grid container justifyContent='center'>
+
+   <Grid item md={5} mt={5} p = {3}>
     <form onSubmit={handleSubmit}>   
     {error && <Alert severity="error" variant="filled" >{error}</Alert>}
+<Stack spacing={2}>
 
           <TextField label="email" name="email" variant="outlined" onChange={ (e) => setEmail (e.target.value)  } />
           <TextField label="password" name="password" type="password" variant="outlined" onChange={ (e) => setPassword (e.target.value) } />
           <TextField label="Password Confirmation" name="passwordConfirm" type="password" variant="outlined" onChange={ (e) => setPasswordConfirm (e.target.value) } />
           {error && <Alert severity="error" variant="filled" >{error}</Alert>}
           <Button onClick={handleSubmit}>Sign UP</Button>
+</Stack>
     </form>
 <Stack>
     <Typography>Sign In With Google</Typography>
     <Button onClick={signInWithGoogle}>Sign In With Google</Button>
 </Stack>
+   </Grid>
    </Grid>
    </>
     )

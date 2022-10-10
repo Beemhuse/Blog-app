@@ -63,7 +63,7 @@ function DrawerAppBar(props) {
               <Link to="/signup" >
               <Button disableElevation sx={{ borderRadius: "20px", fontSize: '14px', ":hover": { backgroundColor: theme.palette.primary.main }, textTransform: 'none', }} variant="contained">Register</Button>
                 </Link>
-              <Link to="/login" >
+              <Link to="/signin" >
               <Button disableElevation sx={{ borderRadius: "20px", fontSize: '12px', backgroundColor: 'none', border: '1px solid black', ":hover": { backgroundColor: 'none' }, textTransform: 'none', width: '80px', color: 'black' }}  >Log in</Button>
                 </Link>
             </Stack>
@@ -128,35 +128,17 @@ function DrawerAppBar(props) {
                   fontSize: "14px",
                   fontFamily: "Quicksand",
                   color: theme.palette.primary.text,
-                  // opacity: "0.7",
                   ":hover": { opacity: "1" },
-                  // marginRight: "100px",
                 }}
               >
                 <Link to="/">
                   <ListItemButton>Home</ListItemButton>
                 </Link>
-                <Link to="/resume">
-                  <ListItemButton>Template</ListItemButton>
+                <Link to="/">
+                  <ListItemButton>About</ListItemButton>
                 </Link>
               </List>
 
-              {/* {
-                currentUser
-                  ? <Box>
-                    <Link to="/post" >
-                      <Button disableElevation sx={{ borderRadius: "20px", fontSize: '14px', ":hover": { backgroundColor: theme.palette.primary.main }, textTransform: 'none' }} variant="contained">Go to Editor</Button>
-                    </Link>
-                  </Box>
-                  : <Stack direction='row' spacing={2} ml={10}>
-                    <Link to="/signup" >
-                      <Button disableElevation sx={{ borderRadius: "20px", fontSize: '14px', ":hover": { backgroundColor: theme.palette.primary.main }, textTransform: 'none', width: '100px' }} variant="contained">Register</Button>
-                    </Link>
-                    <Link to="/login" >
-                      <Button disableElevation sx={{ borderRadius: "20px", fontSize: '12px', backgroundColor: 'none', border: '1px solid black', ":hover": { backgroundColor: 'none' }, textTransform: 'none', width: '80px', color: 'black' }}  >Log in</Button>
-                    </Link>
-                  </Stack>
-              } */}
             </Stack>
           </Box>
         </Toolbar>
@@ -165,7 +147,7 @@ function DrawerAppBar(props) {
         </Box>
       </AppBar>
       <Box component="nav">
-        <Link to="/">
+        <Link to="/" style={{textDecoration:'none'}}>
           <Typography
             variant="h5"
             component="div"

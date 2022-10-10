@@ -1,15 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import postsReducer from "../reducers/index";
-// import {applyMiddleware} from 'redux';
-// import { getDefaultMiddleware} from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage'
-// import thunk from "redux-thunk"
 import {setupListeners} from "@reduxjs/toolkit/query"
 import { persistReducer , persistStore,
   //  FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER 
   } from 'redux-persist'
 import userReducer from "../reducers/user";
-// import {fetchPosts} from "../reducers/index";
+import newsReducer from "../reducers/news";
 
 
 
@@ -33,13 +30,7 @@ export const store = configureStore({
   reducer: {
     posts: persistedReducer,
     user: userReducer,
-    // middleware: thunk ({
-    //   serializableCheck: {
-    //     ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-    //   },
-    // }),
-    // applyMiddleware(thunk)
-    // middleware: customizedMiddleware
+    news: newsReducer,
   },
 });
 

@@ -4,7 +4,7 @@ import Editprofile from "../pages/user/index"
 
 const UserRoutes = [
   { path: 'profile', element: <Editprofile /> },  
-  { path: 'post', element: <CreatePost /> },  
+  { path: 'editor', element: <CreatePost /> },  
 
 ]
 

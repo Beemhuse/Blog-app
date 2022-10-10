@@ -38,9 +38,6 @@ const theme = {
 
 
 export default function UserLayout() {
-  // const [open, setOpen] = React.useState(false);
-  // const [loading, setLoading] = useState(false)
- 
   // const [user, setUser] = React.useState('');
   const navigate = useNavigate()
   const {currentUser} = useAuth()
@@ -53,7 +50,7 @@ export default function UserLayout() {
       console.log('mounted', authToken, user)
       navigate("/signin")
     }
-  }, [authToken, navigate, user])
+  })
 
 //   useEffect(()=>{
 // setUser(currentUser.email)
@@ -61,21 +58,21 @@ export default function UserLayout() {
 //   }, [])
 
 
-useEffect(()=>{
-  if (currentUser){
-    dispatch(
-      signin({
-        email: currentUser.email,
-        uid: currentUser.uid,
-        displayName: currentUser.displayName,
-        photoUrl: currentUser.photoURL,
-      })
-    )
-  }
-  else{
+// useEffect(()=>{
+//   if (currentUser){
+//     dispatch(
+//       signin({
+//         email: currentUser.email,
+//         uid: currentUser.uid,
+//         displayName: currentUser.displayName,
+//         photoUrl: currentUser.photoURL,
+//       })
+//     )
+//   }
+//   else{
 
-  }
-})
+//   }
+// })
 
 
   return (

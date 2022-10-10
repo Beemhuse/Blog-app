@@ -33,8 +33,8 @@ function UserDrawerAppBar(props) {
           <Link to="/" >
           <ListItemButton>Home</ListItemButton>
           </Link>
-          <Link to="/resume" >
-            <ListItemButton>Template</ListItemButton>
+          <Link to="/" >
+            <ListItemButton>About</ListItemButton>
           </Link>
         </List>
             <Stack spacing={2} alignItems='left'>
@@ -69,7 +69,7 @@ function UserDrawerAppBar(props) {
         position="fixed"
       >
         <Toolbar sx={{ display: "flex", justifyContent: "space-between", alignItems:'center' }}>
-          <Link to="/">
+          <Link to="/user/dashboard">
             <Typography
               variant="h5"
               component="div"
@@ -121,7 +121,7 @@ function UserDrawerAppBar(props) {
                   <ListItemButton>Template</ListItemButton>
                 </Link> */}
               </List>
-              <Link to="/user/post">
+              <Link to="/user/dashboard/editor">
                 <Button
                   disableElevation
                   sx={{

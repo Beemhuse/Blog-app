@@ -25,12 +25,8 @@ console.log(postId)
 
 const post = useSelector((state) =>{
     const result = state.posts.posts.find((post) => post.id === postId);
-    // console.log({result,postId})
     return result
-// return state;
 })
-// const post = useSelector(selectPostById);
-console.log(post)
 
 if (!post ){
     return (
@@ -48,12 +44,10 @@ if (!post ){
 
 return(
     <>
-
-
+    
     <section>
         <article >
-            hfhsioaufhaoihfpaoih
-            <h2 style={{color: 'black'}}>{post.author.name}</h2>
+            <h2 style={{fontWeight:'700'}}>{post.title}</h2>
             <p>{post.postText}</p>
         </article>
     </section>

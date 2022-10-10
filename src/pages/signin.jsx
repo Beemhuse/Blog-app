@@ -1,12 +1,11 @@
 import React, {useState} from 'react'
-import {Grid,Alert, TextField, Button, Stack, } from "@mui/material"
+import {Grid,Alert,Box, TextField, Button, Stack, } from "@mui/material"
 import {auth, provider} from "../config/firebase-config"
 import {signInWithPopup} from "firebase/auth"
 import { useNavigate } from "react-router";
 import {useAuth} from "../context/auth"
 import { useDispatch, } from "react-redux";
 import { signin,} from "../redux/reducers/user";
-// import {useAuth} from "../context/auth"
 
 
 
@@ -58,19 +57,24 @@ dispatch(
   return (
    <>
    <Grid item md={12} mt={5}>
+    <Box sx={{width:'400px', margin:'100px auto', display:'flex', flexDirection:'column'}}>
+
     <form onSubmit={handleSubmit}>
 
-   
-          <TextField label="email" name="email" variant="outlined" onChange={ handleChange  } />
-          <TextField label="password" name="password" type="password" variant="outlined" onChange={ handleChange } />
+   <Stack spacing={2}>
+
+          <TextField label="Email" name="email" variant="outlined" onChange={ handleChange  } />
+          <TextField label="Password" name="password" type="password" variant="outlined" onChange={ handleChange } />
           {error && <Alert severity="error" variant="filled" >{error}</Alert>}
           <Button onClick={handleSubmit}>Sign In</Button>
+   </Stack>
     </form>
 <Stack>
 
     {/* <Typography>Sign In With Google</Typography> */}
     <Button onClick={signInWithGoogle}>Sign In With Google</Button>
 </Stack>
+    </Box>
    </Grid>
    </>
     )

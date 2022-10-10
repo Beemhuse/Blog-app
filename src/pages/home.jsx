@@ -1,32 +1,54 @@
-import React, { useEffect} from "react";
+import React, { useEffect, useState} from "react";
 import { Grid,Card,Divider, Avatar, Typography, Box, Stack } from "@mui/material";
 import image from "../images/Rectangle4.png";
-// import { update, selectUser } from "../redux/reducers/user";
 import { useSelector, useDispatch } from "react-redux";
 import { getDocs, collection } from 'firebase/firestore'
 import { db } from '../config/firebase-config'
 import { viewPost,  } from "../redux/reducers/index";
 import {Link} from "react-router-dom"
 import { fetchPosts, getPostsStatus, selectAllPosts } from "../redux/reducers/index";
+import {
+  fetchNews,
+  getNewsStatus,
+  selectAllNews,
+} from "../redux/reducers/news";
 
 
 
 
 
 export default function Homepage() {
+
+
   const postsCollectionRef = collection(db, "posts");
   const dispatch = useDispatch();
-const posts = useSelector(selectAllPosts)
-// const error = useSelector(getPostsError)
-const postsStatus = useSelector(getPostsStatus)
+  const posts = useSelector(selectAllPosts)
 const postsList = useSelector((state) => state.posts);
+const postsStatus = useSelector(getPostsStatus)
+
+
+const newsStatus = useSelector(getNewsStatus)
+const news = useSelector(selectAllNews);
 console.log(postsList)
+
+
 useEffect(()=>{
 if(postsStatus ==='idle'){
   dispatch(fetchPosts())
 }
 
 },[postsStatus, dispatch])
+
+
+
+useEffect(()=>{
+// if(newsStatus ==='idle'){
+// }
+dispatch(fetchNews())
+
+})
+console.log(news);
+
 
 const orderedPosts = posts?.map(post => (
   <Box variant='article' key={post.id}  >
@@ -41,6 +63,38 @@ const orderedPosts = posts?.map(post => (
   </Box>
 ));
 
+// useEffect(()=>{
+
+//   async function updateNews (){
+//     var url = 'https://newsapi.org/v2/everything?' +
+//               'q=Apple&' +
+//               'from=2022-10-04&' +
+//               'sortBy=popularity&' +
+//               'apiKey=1ba5977deeb94fa1b0e93c689ac0de7f';
+//   const response = await fetch(url)
+//   const body  = await response.json()
+//   setNews(body)
+//   return body.value;
+//   }
+//   updateNews()
+// }, [])
+  
+// console.log(news.articles)
+
+// const testResult =() => {
+//   return(
+//     <> 
+//     <Card sx={{ background: "transparent",boxShadow:'none', width:'inherit', border:'none', padding:'10px' }} >
+//       <Avatar variant="square"  alt=""  sx={{width:'inherit', height:'200px'}}/>
+//       <Typography variant='h4' sx={{  }}>tutle</Typography>
+//       <Typography sx={{  }} paragraph>
+//         {/* {post.postText.substring(0, 20)} */}
+//       </Typography>
+//       <Link to={`/posts/`} style={{textDecoration:'none'}}>View Post</Link>
+//     </Card>
+//     </>
+//   )
+// }
 
 // let content;
 // if(postsStatus ==='loading'){
@@ -80,7 +134,7 @@ return (
             alignItems: "center",
           }}
         >
-          <Grid item md={12} sx={{  }}>
+          <Grid item md={12} sx={{}}>
             <Typography sx={{}}>Trending News</Typography>
             <Divider
               color="primary"
@@ -95,6 +149,7 @@ return (
                     alt=""
                     sx={{ width: "inherit", height: "300px" }}
                   />
+                  <testResult />
                   <Stack spacing={2}>
                     <Typography variant="p" sx={{ opacity: "0.6" }}>
                       UI Design
@@ -240,16 +295,23 @@ return (
             sx={{ mt: "10px", border: "2px solid #3849aa" }}
           />
 
-          <Grid container  sx={{gap:'10px', display:'flex'}} >
-
-            {orderedPosts}
+          <Grid container sx={{ gap: "10px", display: "flex" }}>
+             {orderedPosts ? (
+              <>
+              {orderedPosts}
+              </>
+              ) : (
+                <>
+                <p>Reload this page</p>
+              </>
+            )} 
           </Grid>
         </Grid>
       </Grid>
 
-      <Grid item md={4} mt={3}>
+      <Grid item md={4} xs ={12} mt={3}>
         <Grid container>
-          <Grid item md={12} sx={{  }}>
+          <Grid item md={12} xs={12} sx={{}}>
             <Typography sx={{ textAlign: "right" }}>
               Latest Technologies
             </Typography>
@@ -258,30 +320,58 @@ return (
               sx={{ mt: "10px", border: "2px solid #3849aa" }}
             />
 
-            <Box component="div" mt={2} sx={{ width: "200px" }}>
-              <Avatar
-                variant={"square"}
-                src={image}
-                alt=""
-                sx={{ width: "inherit", height: "300px" }}
-              />
-              <Stack spacing={2}>
-                <Typography variant="p" sx={{ opacity: "0.6" }}>
-                  UI Design
-                </Typography>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    opacity: "0.6",
-                    fontSize: "14px",
-                    fontWeight: "400",
-                    // color: "#FFFFFF",
-                  }}
-                >
-                  Understanding color theory: the color wheel and finding
-                  complementary colors
-                </Typography>
-              </Stack>
+            <Box sx={{}}>
+              <Box component="div" mt={2} sx={{ width: "200px" }}>
+                <Avatar
+                  variant={"square"}
+                  src={image}
+                  alt=""
+                  sx={{ width: "inherit", height: "140px" }}
+                />
+                <Stack spacing={2}>
+                  <Typography variant="p" sx={{ opacity: "0.6" }}>
+                    UI Design
+                  </Typography>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      opacity: "0.6",
+                      fontSize: "14px",
+                      fontWeight: "400",
+                      // color: "#FFFFFF",
+                    }}
+                  >
+                    Understanding color theory: the color wheel and finding
+                    complementary colors
+                  </Typography>
+                </Stack>
+              </Box>
+
+              <Box component="div" mt={2} sx={{ width: "200px" }}>
+                <Avatar
+                  variant={"square"}
+                  src={image}
+                  alt=""
+                  sx={{ width: "inherit", height: "140px" }}
+                />
+                <Stack spacing={2}>
+                  <Typography variant="p" sx={{ opacity: "0.6" }}>
+                    UI Design
+                  </Typography>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      opacity: "0.6",
+                      fontSize: "14px",
+                      fontWeight: "400",
+                      // color: "#FFFFFF",
+                    }}
+                  >
+                    Understanding color theory: the color wheel and finding
+                    complementary colors
+                  </Typography>
+                </Stack>
+              </Box>
             </Box>
           </Grid>
         </Grid>
