@@ -40,7 +40,7 @@ dispatch(
   signin({
     email: currentUser.email,
     uid: currentUser.uid,
-    displayName: currentUser.displayName,
+    // displayName: currentUser.displayName,
     photoUrl: currentUser.photoURL,
   })
 );
